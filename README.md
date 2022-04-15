@@ -1,6 +1,6 @@
-# web3-multicall
+# web3-mulitcall
 
-[![npm version](https://badge.fury.io/js/%40dopex-io%2Fweb3-multicall.svg)](https://badge.fury.io/js/%40dopex-io%2Fweb3-multicall)
+[![npm version](https://badge.fury.io/js/%40hashex%2Fweb3-multicall.svg)](https://badge.fury.io/js/%40hashex%2Fweb3-multicall)
 
 A library to do multiple calls via a single `eth_call` using [web3](https://github.com/ChainSafe/web3.js).
 
@@ -9,13 +9,13 @@ A library to do multiple calls via a single `eth_call` using [web3](https://gith
 - via yarn
 
 ```bash
-yarn add @dopex-io/web3-multicall
+yarn add @hashex/web3-multicall
 ```
 
 - via npm
 
 ```bash
-npm i @dopex-io/web3-multicall
+npm i @hashex/web3-multicall
 ```
 
 ## Usage
@@ -29,7 +29,7 @@ npm i @dopex-io/web3-multicall
 - With `chainId`
 
   ```js
-  import Multicall from '@dopex-io/web3-multicall';
+  import Multicall from '@hashex/web3-multicall';
 
   import erc20Abi from './abi/erc20.json';
 
@@ -50,7 +50,7 @@ npm i @dopex-io/web3-multicall
 - With custom Multicall address
 
   ```js
-  import Multicall from '@dopex-io/web3-multicall';
+  import Multicall from '@hashex/web3-multicall';
 
   import erc20Abi from './abi/erc20.json';
 
@@ -58,7 +58,7 @@ npm i @dopex-io/web3-multicall
     const web3 = new Web3(provider /* Your Web3 provider here */);
 
     const multicall = new Multicall({
-      multicallAddress: "The address of the deployed multicall contract",
+      multicallAddress: 'The address of the deployed multicall contract',
       provider: 'Your Web3 provider here',
     });
 
@@ -90,51 +90,53 @@ console.log('ETH balance of Address 3', balances[2]);
   Gets the ETH balance of an address
 
   ```js
-  const ethBalance = multicall.getEthBalance('address');
+  const ethBalance = await multicall.getEthBalance('address').call();
   ```
 
 - `getBlockHash`
   Gets the block hash
 
+  Only works for 256 most recent, excluding current according to [Solidity docs](https://docs.soliditylang.org/en/v0.4.24/units-and-global-variables.html#block-and-transaction-properties)
+
   ```js
-  const blockHash = multicall.getBlockHash(blockNumber);
+  const blockHash = await multicall.getBlockHash(blockNumber).call();
   ```
 
 - `getLastBlockHash`
   Gets the last blocks hash
 
   ```js
-  const lastBlockHash = multicall.getLastBlockHash();
+  const lastBlockHash = await multicall.getLastBlockHash().call();
   ```
 
 - `getCurrentBlockTimestamp`
   Gets the current block timestamp
 
   ```js
-  const currentBlockTimestamp = multicall.getCurrentBlockTimestamp();
+  const currentBlockTimestamp = await multicall.getCurrentBlockTimestamp().call();
   ```
 
 - `getCurrentBlockDifficulty`
   Gets the current block difficulty
 
   ```js
-  const currentBlockDifficulty = multicall.getCurrentBlockDifficulty();
+  const currentBlockDifficulty = await multicall.getCurrentBlockDifficulty().call();
   ```
 
 - `getCurrentBlockGasLimit`
   Gets the current block gas limit
 
   ```js
-  const currentBlockGasLimit = multicall.getCurrentBlockGasLimit();
+  const currentBlockGasLimit = await multicall.getCurrentBlockGasLimit().call();
   ```
 
 - `getCurrentBlockCoinbase`
   Gets the current block coinbase
 
   ```js
-  const currentBlockCoinbase = multicall.getCurrentBlockCoinbase();
+  const currentBlockCoinbase = await multicall.getCurrentBlockCoinbase().call();
   ```
 
 ## License
 
-This project is licensed under the MIT License - Copyright (c) 2021 Dopex
+This project is licensed under the MIT License - Copyright (c) 2022 HashEx

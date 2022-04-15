@@ -4,39 +4,7 @@ Name: Ethereum Mainnet
 
 ChainID: 1
 
-Contract: [0xeefba1e63905ef1d7acba5a8513c70307c1ce441](https://etherscan.io/address/0xeefba1e63905ef1d7acba5a8513c70307c1ce441)
-
----
-
-Name: Ethereum Testnet Ropsten
-
-ChainID: 3
-
-Contract: [0xF24b01476a55d635118ca848fbc7Dab69d403be3](https://ropsten.etherscan.io/address/0xF24b01476a55d635118ca848fbc7Dab69d403be3)
-
----
-
-Name: Ethereum Testnet Rinkeby
-
-ChainID: 4
-
-Contract: [0x42ad527de7d4e9d9d011ac45b31d8551f8fe9821](https://rinkeby.etherscan.io/address/0x42ad527de7d4e9d9d011ac45b31d8551f8fe9821)
-
----
-
-Name: Ethereum Testnet Görli
-
-ChainID: 5
-
-Contract: [0x77dca2c955b15e9de4dbbcf1246b4b85b651e50e](https://goerli.etherscan.io/address/0x77dca2c955b15e9de4dbbcf1246b4b85b651e50e)
-
----
-
-Name: Ethereum Testnet Kovan
-
-ChainID: 42
-
-Contract: [0x2cc8688c5f75e365aaeeb4ea8d6a480405a48d2a](https://kovan.etherscan.io/address/0x2cc8688c5f75e365aaeeb4ea8d6a480405a48d2a)
+Contract: [0x97a30C692eCe9C317235d48287d23d358170FC40](https://etherscan.io/address/0x97a30C692eCe9C317235d48287d23d358170FC40)
 
 ---
 
@@ -44,44 +12,70 @@ Name: Binance Smart Chain Mainnet
 
 ChainID: 56
 
-Contract: [0x1Ee38d535d541c55C9dae27B12edf090C608E6Fb](https://bscscan.com/address/0x1Ee38d535d541c55C9dae27B12edf090C608E6Fb)
+Contract: [0x133BCed277e1c56D88317b49Df56135789c42711](https://bscscan.com/address/0x133BCed277e1c56D88317b49Df56135789c42711)
 
 ---
 
-Name: xDAI Chain
+Name: Binance Smart Chain Testnet
 
-ChainID: 100
+ChainID: 97
 
-Contract: [0xb5b692a88bdfc81ca69dcb1d924f59f0413a602a](https://blockscout.com/xdai/mainnet/address/0xb5b692a88BDFc81ca69dcB1d924f59f0413A602a/transactions)
+Contract: [0xc97A733F0e622B6EC250DFFe6235e6Ac5d0487Be](https://testnet.bscscan.com/address/0xc97A733F0e622B6EC250DFFe6235e6Ac5d0487Be)
 
 ---
 
-Name: Polygon Mainnet
+Name: Fantom
+
+ChainID: 250
+
+Contract: [0xEE86bEb4F82A57C623Cbd93A44F5a986c4543788](https://ftmscan.com/address/0xEE86bEb4F82A57C623Cbd93A44F5a986c4543788)
+
+---
+
+Name: Polygon
 
 ChainID: 137
 
-Contract: [0xc4f1501f337079077842343Ce02665D8960150B0](https://polygonscan.com/address/0xc4f1501f337079077842343Ce02665D8960150B0)
+Contract: [0x88b373B83166E72FD55648Ce114712633f1782E2](https://polygonscan.com/address/0x88b373B83166E72FD55648Ce114712633f1782E2)
 
 ---
 
-Name: Polygon Testnet Mumbai
+Name: Gnosis
 
-ChainID: 80001
+ChainID: 100
 
-Contract: [0x5a0439824F4c0275faa88F2a7C5037F9833E29f1](https://mumbai.polygonscan.com/address/0x5a0439824F4c0275faa88F2a7C5037F9833E29f1)
-
----
-
-Name: Arbitrum One
-
-ChainID: 42161
-
-Contract: [0x813715eF627B01f4931d8C6F8D2459F26E19137E](https://arbiscan.io/address/0x813715eF627B01f4931d8C6F8D2459F26E19137E)
+Contract: [0x88b373B83166E72FD55648Ce114712633f1782E2](https://blockscout.com/xdai/mainnet/address/0x88b373B83166E72FD55648Ce114712633f1782E2)
 
 ---
 
-Name: Arbitrum Testnet Rinkeby
+Name: Avalanche C-Chain
 
-ChainID: 421611
+ChainID: 43114
 
-Contract: [0xc72e0331e2e7aeb30aa7d3d250d245ebf2f27037](https://testnet.arbiscan.io/address/0xc72e0331e2e7aeb30aa7d3d250d245ebf2f27037)
+Contract: [0x88b373B83166E72FD55648Ce114712633f1782E2](https://snowtrace.io/address/0x88b373B83166E72FD55648Ce114712633f1782E2)
+
+---
+
+Name: Aurora
+
+ChainID: 1313161554
+
+Contract: [0x88b373B83166E72FD55648Ce114712633f1782E2](https://aurorascan.dev/address/0x88b373B83166E72FD55648Ce114712633f1782E2)
+
+---
+
+Name: Moonriver
+
+ChainID: 1285
+
+Contract: [0x88b373B83166E72FD55648Ce114712633f1782E2](https://moonriver.moonscan.io/address/0x88b373B83166E72FD55648Ce114712633f1782E2)
+
+---
+
+Name: Cronos
+
+ChainID: 25
+
+Contract: [0x88b373B83166E72FD55648Ce114712633f1782E2](https://cronoscan.com/address/0x88b373B83166E72FD55648Ce114712633f1782E2)
+
+---

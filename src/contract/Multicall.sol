@@ -8,6 +8,7 @@ pragma experimental ABIEncoderV2;
 /// @author Michael Elliot <mike@makerdao.com>
 /// @author Joshua Levine <joshua@makerdao.com>
 /// @author Nick Johnson <arachnid@notdot.net>
+/// @author Gleb Zykov <gzykov@hashex.org>
 
 contract Multicall {
   struct Call {
@@ -15,15 +16,13 @@ contract Multicall {
     bytes callData;
   }
 
-  function aggregate(Call[] memory calls)
-    public
-    returns (uint256 blockNumber, bytes[] memory returnData)
-  {
+  function aggregate(Call[] memory calls) external view returns (uint256 blockNumber, bytes[] memory returnData, bool[] memory results) {
     blockNumber = block.number;
     returnData = new bytes[](calls.length);
-    for (uint256 i = 0; i < calls.length; i++) {
-      (bool success, bytes memory ret) = calls[i].target.call(calls[i].callData);
-      require(success);
+    results = new bool[](calls.length);
+    for(uint256 i = 0; i < calls.length; i++) {
+      (bool success, bytes memory ret) = calls[i].target.staticcall(calls[i].callData);
+      results[i] = success;
       returnData[i] = ret;
     }
   }

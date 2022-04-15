@@ -1,28 +1,40 @@
 {
-  "name": "@dopex-io/web3-multicall",
-  "version": "0.1.7",
+  "name": "@hashex/web3-multicall",
+  "version": "0.0.2",
   "description": "A library to do multiple calls via a single eth_call using web3.",
   "main": "dist/index.js",
   "source": "src/index.ts",
   "author": {
-    "name": "witherblock",
-    "email": "wb@dopex.io",
-    "url": "https://github.com/witherblock"
+    "name": "hashex",
+    "email": "developer@hashex.org",
+    "url": "https://github.com/hashex"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dopex-io/web3-multicall"
+    "url": "https://github.com/hashex/web3-multicall"
   },
   "license": "MIT",
   "private": false,
   "scripts": {
     "build": "microbundle",
     "dev": "microbundle watch",
-    "prepare": "yarn build"
+    "prepare": "yarn build",
+    "lint": "eslint src",
+    "test": "nyc ./node_modules/.bin/_mocha 'test/**/*.test.ts'"
   },
   "devDependencies": {
-    "microbundle": "^0.14.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@testdeck/mocha": "^0.2.0",
+    "@types/chai": "^4.3.0",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "chai": "^4.3.6",
+    "eslint": "^8.13.0",
+    "microbundle": "^0.13.3",
+    "mocha": "^9.2.2",
+    "nyc": "^15.1.0",
     "prettier": "^2.4.1",
+    "ts-node": "^10.7.0",
     "typescript": "^4.4.3"
   },
   "dependencies": {
