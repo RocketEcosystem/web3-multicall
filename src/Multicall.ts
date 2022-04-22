@@ -56,7 +56,12 @@ class Multicall {
             );
             // console.log('response', results[index], hex)
             if (results[index]) {
-                let result = this.web3.eth.abi.decodeParameters(types, hex);
+                let result;
+                try {
+                    result = this.web3.eth.abi.decodeParameters(types, hex);
+                } catch (e: any) {
+                    return [false, `Data handling error: ${e.message}`];
+                }
 
                 delete result.__length__;
 

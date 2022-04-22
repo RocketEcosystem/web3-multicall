@@ -39,7 +39,7 @@ _chai.expect;
         expect(result[0][1]).to.be.equal('USDT');
     }
 
-    @test async 'No constructor params fail' () {
+    @test async 'Not supported chain param fail' () {
         const provider = new Web3.providers.HttpProvider(this.host);
         const unsupportedChainId = 1111;
         expect(() => new Multicall({
