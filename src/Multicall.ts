@@ -5,6 +5,7 @@ import { provider } from 'web3-core';
 
 import { CHAIN_ID_TO_MULTICALL_ADDRESS } from './constants';
 import mulitcallAbi from './abi/Multicall.json';
+import multicallAggregate from './abi/MulticallAggregate.json';
 
 interface ConstructorArgs {
   chainId?: number;
@@ -13,94 +14,132 @@ interface ConstructorArgs {
 }
 
 class Multicall {
-    web3: Web3;
-    multicall: Contract;
+  web3: Web3;
+  multicall: Contract;
+  multicallAgg: Contract;
 
-    constructor({ chainId, provider, multicallAddress }: ConstructorArgs) {
-        this.web3 = new Web3(provider);
+  constructor({ chainId, provider, multicallAddress }: ConstructorArgs) {
+    this.web3 = new Web3(provider);
 
-        const _multicallAddress = multicallAddress
-            ? multicallAddress
-            : chainId
-                ? CHAIN_ID_TO_MULTICALL_ADDRESS[chainId]
-                : undefined;
+    const _multicallAddress = multicallAddress
+      ? multicallAddress
+      : chainId
+      ? CHAIN_ID_TO_MULTICALL_ADDRESS[chainId]
+      : undefined;
 
-        if (!_multicallAddress) {
-            throw new Error(
-                'No address found via chainId. Please specify multicallAddress.'
-            );
-        }
+    if (!_multicallAddress) {
+      throw new Error(
+        'No address found via chainId. Please specify multicallAddress.'
+      );
+    }
 
-        this.multicall = new this.web3.eth.Contract(
+    this.multicall = new this.web3.eth.Contract(
       mulitcallAbi as AbiItem[],
       _multicallAddress
-        );
+    );
+
+    this.multicallAgg = new this.web3.eth.Contract(
+      multicallAggregate as AbiItem[],
+      _multicallAddress
+    );
+  }
+
+  /// @dev Works with both versions of multicall
+  async aggregate(calls: any[]) {
+    const callRequests = calls.map((call) => {
+      const callData = call.encodeABI();
+      return {
+        target: call._parent._address,
+        callData,
+      };
+    });
+
+    let res;
+
+    let e = false;
+    try {
+      res = await this.multicall.methods.aggregate(callRequests).call();
+    } catch (error) {
+      e = true;
     }
 
-    async aggregate(calls: any[]) {
-        const callRequests = calls.map((call) => {
-            const callData = call.encodeABI();
-            return {
-                target: call._parent._address,
-                callData,
-            };
-        });
-
-        const { returnData, results } = await this.multicall.methods
-            .aggregate(callRequests)
-            .call();
-
-        return returnData.map((hex: string, index: number) => {
-            const types = calls[index]._method.outputs.map(
-                (o: any) => ((o.internalType !== o.type) && (o.internalType !== undefined)) ? o : o.type
-            );
-            // console.log('response', results[index], hex)
-            if (results[index]) {
-                let result;
-                try {
-                    result = this.web3.eth.abi.decodeParameters(types, hex);
-                } catch (e: any) {
-                    return [false, `Data handling error: ${e.message}`];
-                }
-
-                delete result.__length__;
-
-                result = Object.values(result);
-
-                return [true, result.length === 1 ? result[0] : result];
-            } else {
-                return [false, hex];
-            }
-        });
+    if (e) {
+      console.log('e: ', e);
+      try {
+        res = await this.multicallAgg.methods
+          .aggregate(callRequests, false)
+          .call();
+      } catch (e) {}
     }
 
-    getEthBalance(address: string) {
-        return this.multicall.methods.getEthBalance(address);
+    let { returnData, results } = res;
+
+    if (e) {
+      returnData = returnData.flat();
+
+      let x = {
+        returnData: [],
+        results: [],
+      };
+      returnData = returnData.map((e) => {
+        typeof e === 'boolean' ? x.results.push(e) : x.returnData.push(e);
+      });
+
+      returnData = x.returnData;
+      results = x.results;
     }
 
-    getBlockHash(blockNumber: string | number) {
-        return this.multicall.methods.getBlockHash(blockNumber);
-    }
+    return returnData.map((hex: string, index: number) => {
+      const types = calls[index]._method.outputs.map((o: any) =>
+        o.internalType !== o.type && o.internalType !== undefined ? o : o.type
+      );
+      console.log('response', results[index], hex);
+      if (results[index]) {
+        let result;
+        try {
+          result = this.web3.eth.abi.decodeParameters(types, hex);
+        } catch (e: any) {
+          return [false, `Data handling error: ${e.message}`];
+        }
 
-    getLastBlockHash() {
-        return this.multicall.methods.getLastBlockHash();
-    }
+        delete result.__length__;
 
-    getCurrentBlockTimestamp() {
-        return this.multicall.methods.getCurrentBlockTimestamp();
-    }
+        result = Object.values(result);
 
-    getCurrentBlockDifficulty() {
-        return this.multicall.methods.getCurrentBlockDifficulty();
-    }
+        return [true, result.length === 1 ? result[0] : result];
+      } else {
+        return [false, hex];
+      }
+    });
+  }
 
-    getCurrentBlockGasLimit() {
-        return this.multicall.methods.getCurrentBlockGasLimit();
-    }
+  getEthBalance(address: string) {
+    return this.multicall.methods.getEthBalance(address);
+  }
 
-    getCurrentBlockCoinbase() {
-        return this.multicall.methods.getCurrentBlockCoinbase();
-    }
+  getBlockHash(blockNumber: string | number) {
+    return this.multicall.methods.getBlockHash(blockNumber);
+  }
+
+  getLastBlockHash() {
+    return this.multicall.methods.getLastBlockHash();
+  }
+
+  getCurrentBlockTimestamp() {
+    return this.multicall.methods.getCurrentBlockTimestamp();
+  }
+
+  getCurrentBlockDifficulty() {
+    return this.multicall.methods.getCurrentBlockDifficulty();
+  }
+
+  getCurrentBlockGasLimit() {
+    return this.multicall.methods.getCurrentBlockGasLimit();
+  }
+
+  getCurrentBlockCoinbase() {
+    return this.multicall.methods.getCurrentBlockCoinbase();
+  }
 }
 
 export default Multicall;
