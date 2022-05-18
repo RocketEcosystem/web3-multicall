@@ -4,7 +4,7 @@
 
 A library to do multiple calls via a single `eth_call` using [web3](https://github.com/ChainSafe/web3.js).
 
-Support added for different version of multicall contract.
+Support added for different version of multicall contract (see included MultiCallAgg.sol).
 
 ## Installation
 
